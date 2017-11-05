@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="socket.io/socket.io.js"></script>
     <title>Stream Web RTC</title>
 </head>
 <body>
     <h1>Hi, I'm Ngọc Nam</h1>
     <video id="localStream" controls width="300"></video>
+    <br>
+    <label>My connection token</label>
+    <br>
+    <textarea id="txtSignal" cols="100" rows="3"></textarea>
+    <br>
+    <input type="text" id="otherSignal" placeholder="Your friend's Signal">
+    <br>
+    <input type="button" id="connect" value="Connect">
 </body>
 <script src="bundle.js"></script>
 </html>

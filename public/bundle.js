@@ -4999,35 +4999,37 @@ function done(stream, er, data) {
 /***/ (function(module, exports, __webpack_require__) {
 
 const openStream = __webpack_require__(16);
-openStream();
+const playVideo = __webpack_require__(17);
+const Peer = __webpack_require__(18);
+const $ = __webpack_require__(35);
+
+openStream(stream => {
+    playVideo(stream,'localStream')
+    
+    const p = new Peer({initiator: location.hash === '#1', trickle: false, stream});
+    p.on('signal', token => {
+        $('#txtSignal').val(JSON.stringify(token));
+    });
+    
+    
+    $('#connect').on('click',()=>{
+        var otherSignal =  JSON.parse($('#otherSignal').val());
+        p.signal(otherSignal);
+    });
+
+    p.on('stream', otherStream => playVideo(otherStream,'otherStream'));
+});
 
 
 
 /***/ }),
 /* 16 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-const playVideo = __webpack_require__(17);
-const Peer = __webpack_require__(18);
-const $ = __webpack_require__(35);
-
-function openStream(){
+function openStream(cb){
     navigator.mediaDevices.getUserMedia({audio:true, video:true})
     .then(stream => {
-        playVideo(stream,'localStream')
-
-        const p = new Peer({initiator: location.hash === '#1', trickle: false, stream});
-        p.on('signal', token => {
-            $('#txtSignal').val(JSON.stringify(token));
-        });
-        
-        
-        $('#connect').on('click',()=>{
-            var otherSignal =  JSON.parse($('#otherSignal').val());
-            p.signal(otherSignal);
-        });
-
-        p.on('stream', otherStream => playVideo(otherStream,'otherStream'));
+        cb(stream);
     })
     .catch(err => console.log(err));
 }

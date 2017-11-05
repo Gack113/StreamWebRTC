@@ -17,6 +17,9 @@
     "url": "https://github.com/Gack113/StreamWebRTC/issues"
   },
   "homepage": "https://github.com/Gack113/StreamWebRTC#readme",
+  "script":{
+    "start": "node index"
+  },
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.2",
